@@ -326,10 +326,10 @@ PlotQCReport <- function(response.data,response.var = c("Status.prediction"), re
     response.data.file.heatmap.plot <- response.data.file.heatmap.plot %>% spread(key = Peptide.Charge,value = Ok.Transition.No)
 
     # assign the file name to rows before changing the df to mat
-    rownames(response.data.file.heatmap.plot) <- response.data.file.heatmap.plot$FileName
+    response.data.file.heatmap.plot <- response.data.file.heatmap.plot %>% column_to_rownames("FileName")
 
     # format to matrix
-    response.data.file.heatmap.plot <- as.matrix(response.data.file.heatmap.plot %>% select(-FileName))
+    response.data.file.heatmap.plot <- as.matrix(response.data.file.heatmap.plot)
 
     # transpose the matrix
     response.data.file.heatmap.plot <- t(response.data.file.heatmap.plot)

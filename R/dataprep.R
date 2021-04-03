@@ -195,7 +195,7 @@ CleanUpChromatograms <- function(chromatogram.path = NULL, peak.boundary.path = 
       group_by(File,FileName,PeptideModifiedSequence,PrecursorCharge) %>%
       do(ChromGroup = BuildPeakGroup(.))
 
-    data = unique(merge(data,peak.groups))
+    data <- full_join(data, peak.groups)
 
     # build the peak group for each (File,FileName,peptide,precursorcharge) trio: the only difference with the chromatogram group is that the peak boundaries are applied.
 
@@ -227,7 +227,7 @@ CleanUpChromatograms <- function(chromatogram.path = NULL, peak.boundary.path = 
     data <- data %>% filter(!is.na(PeakGroup))
 
     # add the peak area column to the data frame
-    data$PeakArea <- NULL
+    # data$PeakArea <- NULL
     for (i in 1:nrow(data)) {
       tmp <- paste(data$FragmentIon[[i]],data$ProductCharge[[i]],data$IsotopeLabelType[[i]],sep = ".")
       data$PeakArea[i] <- data$PeakGroup[[i]]@area[[tmp]]
